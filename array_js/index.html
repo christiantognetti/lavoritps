@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prova Numeri Casuali</title>
+    <style>
+        body { font-family: sans-serif; margin: 10px; }
+        .griglia { 
+            display: grid; 
+            grid-template-columns: repeat(10, 1fr); 
+            gap: 5px; 
+            border: 1px solid black; 
+            padding: 5px;
+        }
+        .cella { 
+            padding: 3px; 
+            text-align: center; 
+            border: 1px dashed #ccc; 
+            font-size: 12px;
+        }
+        .evidenza { 
+            background-color: yellow; 
+            font-weight: bold;
+        }
+        h3 { margin-top: 20px; border-bottom: 1px solid #333; }
+    </style>
+</head>
+<body>
+
+    <h1>RISULTATI ANALISI ARRAY</h1>
+
+    <div id="out"></div>
+    
+    <script>
+        
+        var array_di_numeri = [];
+        var somma_totale = 0;
+        var max_trovato = -101;
+        var min_trovato = 101;
+        var solo_maggiori_50 = [];
+        var dimensione = 100;
+        
+        
+        for (var i = 0; i < dimensione; i++) {
+        
+            var numero_casuale = Math.floor(Math.random() * 201) - 100;
+            array_di_numeri.push(numero_casuale);
+            
+            somma_totale = somma_totale + numero_casuale;
+            
+            if (numero_casuale > max_trovato) {
+                max_trovato = numero_casuale;
+            }
+            
+            if (numero_casuale < min_trovato) {
+                min_trovato = numero_casuale;
+            }
+            
+            if (numero_casuale > 50) {
+                solo_maggiori_50.push(numero_casuale);
+            }
+        }
+        
+        
+        var media_finale = (somma_totale / dimensione).toFixed(2);
+        
+        
+        var output_html = "";
+
+        
+        output_html += "<h3>DATI STATISTICI</h3>";
+        output_html += "<ul>";
+        output_html += "<li>Media: <b>" + media_finale + "</b></li>";
+        output_html += "<li>Massimo: <b>" + max_trovato + "</b></li>";
+        output_html += "<li>Minimo: <b>" + min_trovato + "</b></li>";
+        output_html += "</ul>";
+        
+        
+        output_html += "<h3>ARRAY COMPLETO (100 celle)</h3>";
+        output_html += "<div class='griglia'>";
+        
+        for (var k = 0; k < dimensione; k++) {
+            var n = array_di_numeri[k];
+            var classe_css = (n > 50) ? 'cella evidenza' : 'cella';
+            output_html += "<div class='" + classe_css + "'>" + n + "</div>";
+        }
+        
+        output_html += "</div>";
+
+       
+        output_html += "<h3>NUMERI MAGGIORI DI 50 (" + solo_maggiori_50.length + " trovati)</h3>";
+        
+        if (solo_maggiori_50.length > 0) {
+            output_html += "<div class='griglia'>";
+            for (var j = 0; j < solo_maggiori_50.length; j++) {
+                output_html += "<div class='cella evidenza'>" + solo_maggiori_50[j] + "</div>";
+            }
+            output_html += "</div>";
+        } else {
+            output_html += "<p>Niente numeri maggiori di 50.</p>";
+        }
+
+     
+        document.getElementById('out').innerHTML = output_html;
+
+    </script>
+</body>
+</html>
+
